@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class player : MonoBehaviour
 {
@@ -13,6 +15,10 @@ public class player : MonoBehaviour
     private bool bounce;
     public Vector2 jump;
     public float jumpForce = 2.0f;
+    public float jumpheight;
+    // score
+    public static float score;
+    public Text scoreText ;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +51,10 @@ public class player : MonoBehaviour
     void Update()
     {
         movePlayer();
+        if(rb.position.y< -30)
+        {
+            SceneManager.LoadScene("Level01");
+        }
     }
     public void Bounce()
     {
@@ -73,8 +83,33 @@ public class player : MonoBehaviour
         rb.velocity = new Vector2(HorizontalMove, rb.velocity.y);
         if (HorizontalMove == 0 && bounce)
         {
-            rb.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, jumpheight), ForceMode2D.Impulse);
             bounce = false;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Coin")
+        {
+            Destroy(collision.gameObject);
+            score++;
+            
+        //    if (score >= 5)
+        //    {
+        //        print("Level Completed");
+        //        wintext.SetActive(true);
+        //    }
+        }
+        else if (collision.gameObject.tag == "Enimy")
+            {
+                SceneManager.LoadScene("Level01");
+            }
+        setscoretext();
+
+    }
+    public void setscoretext()
+    {
+        scoreText.text = score.ToString();
     }
 }
