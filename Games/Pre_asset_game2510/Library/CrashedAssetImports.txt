@@ -1,2 +1,0 @@
-Assets/2DGamekit/Art/Sprites/AnimatedSprites/Enemies/Gunner/Cutscene/Background/Gunner_INTRO_DOORONLY_00003.png
-Assets/2DGamekit/Art/TileMapPalettes/Tileset/TilesAlien/Tileset_Alien_74.asset

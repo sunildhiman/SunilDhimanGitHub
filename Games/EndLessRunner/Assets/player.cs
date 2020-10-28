@@ -18,7 +18,9 @@ public class player : MonoBehaviour
     public float jumpheight;
     // score
     public static float score;
+    public static int masterScore;
     public Text scoreText ;
+    public Text MasterscoreText;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,8 @@ public class player : MonoBehaviour
         leftDir = false;
         rightDir = false;
         bounce = false;
+
+
 
         jump = new Vector3(0.0f, 0.2f, 0.0f);
     }
@@ -94,22 +98,40 @@ public class player : MonoBehaviour
         {
             Destroy(collision.gameObject);
             score++;
-            
-        //    if (score >= 5)
-        //    {
-        //        print("Level Completed");
-        //        wintext.SetActive(true);
-        //    }
+
+            //    if (score >= 5)
+            //    {
+            //        print("Level Completed");
+            //        wintext.SetActive(true);
+            //    }
         }
-        else if (collision.gameObject.tag == "Enimy")
-            {
-                SceneManager.LoadScene("Level01");
-            }
+        else if (collision.gameObject.tag == "Diamond")
+        {
+            Destroy(collision.gameObject);
+            masterScore++;
+            Debug.Log("masterScore : " + masterScore.ToString());
+        }
+        else if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Enemy encountered ");
+            masterScore = 0;
+            SceneManager.LoadScene("Level01");
+        }
+        else if (collision.gameObject.tag == "Finish" || collision.gameObject.tag == "FinishFlag")
+        {
+            Debug.Log("Completed encountered ");
+            GameObject flag = GameObject.FindGameObjectWithTag("FinishFlag");
+            Rigidbody2D rbb = flag.AddComponent(typeof(Rigidbody2D)) as Rigidbody2D;
+            flag.AddComponent(typeof(Rigidbody2D));
+            
+            
+        }
         setscoretext();
 
     }
     public void setscoretext()
     {
-        scoreText.text = score.ToString();
+        scoreText.text = score>0? "Coins: " + score.ToString():"" ;
+        MasterscoreText.text = masterScore > 0 ? "Diamonds : " + masterScore.ToString(): "";
     }
 }
