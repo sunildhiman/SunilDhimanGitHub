@@ -8,6 +8,7 @@ TagManager:
   - Diamond
   - Enemy
   - FinishFlag
+  - ground
   layers:
   - Default
   - TransparentFX

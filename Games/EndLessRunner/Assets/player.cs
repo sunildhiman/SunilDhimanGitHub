@@ -19,8 +19,14 @@ public class player : MonoBehaviour
     // score
     public static float score;
     public static int masterScore;
-    public Text scoreText ;
+    public Text scoreText;
     public Text MasterscoreText;
+    public Text DistanceText;
+    public static float startPosx, currentPosx, startPosy, currentPosy;
+
+    public GameObject wintext;
+
+    private bool win; 
     // Start is called before the first frame update
     void Start()
     {
@@ -29,9 +35,11 @@ public class player : MonoBehaviour
         leftDir = false;
         rightDir = false;
         bounce = false;
-
-
-
+        startPosx = rb.transform.position.x;
+        startPosy = rb.transform.position.y;
+        win = false;
+        DistanceText.fontSize = 30;
+        wintext.SetActive(false);
         jump = new Vector3(0.0f, 0.2f, 0.0f);
     }
 
@@ -55,7 +63,7 @@ public class player : MonoBehaviour
     void Update()
     {
         movePlayer();
-        if(rb.position.y< -30)
+        if (rb.position.y < -30)
         {
             SceneManager.LoadScene("Level01");
         }
@@ -90,6 +98,9 @@ public class player : MonoBehaviour
             rb.AddForce(new Vector2(0, jumpheight), ForceMode2D.Impulse);
             bounce = false;
         }
+        currentPosx = rb.transform.position.x;
+        currentPosy = rb.transform.position.y;
+        setscoretext();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -123,15 +134,17 @@ public class player : MonoBehaviour
             GameObject flag = GameObject.FindGameObjectWithTag("FinishFlag");
             Rigidbody2D rbb = flag.AddComponent(typeof(Rigidbody2D)) as Rigidbody2D;
             flag.AddComponent(typeof(Rigidbody2D));
-            
-            
+            DistanceText.fontSize = 50;
+            wintext.SetActive(true);
+            win = true;
         }
-        setscoretext();
+        
 
     }
     public void setscoretext()
     {
-        scoreText.text = score>0? "Coins: " + score.ToString():"" ;
-        MasterscoreText.text = masterScore > 0 ? "Diamonds : " + masterScore.ToString(): "";
+        scoreText.text = score > 0 ? "Coins: " + score.ToString() : "";
+        MasterscoreText.text = masterScore > 0 ? "Diamonds : " + masterScore.ToString() : "";
+        DistanceText.text =  (currentPosx - startPosx).ToString();// + " - y : " + (currentPosy - startPosy).ToString();
     }
 }

@@ -11,8 +11,8 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Rigidbody2D gameplayer;
     private Vector3 EndPoint = new Vector3(25, 2);
     public Vector3 Difference = new Vector3(10,5);
-    int levelCount = 0;
-    public int MaxNoOfLevels;
+    int levelCount , MasterlevelCount = 0;
+    public int MaxNoOfLevels, MaxNoOfMasterlevels;
     bool AddFinallevel = false;
     // Start is called before the first frame update
     void Start()
@@ -36,21 +36,22 @@ public class LevelGenerator : MonoBehaviour
             if (levelCount<MaxNoOfLevels)
             {
                 LevelPartTransform = Instantiate(levelPart01, EndPoint + Difference, Quaternion.identity);
+                EndPoint = LevelPartTransform.Find("Endpoint").position;
                 levelCount++;
             }
-            else if(AddFinallevel)
+            else if(AddFinallevel && MasterlevelCount >= MaxNoOfMasterlevels)
             {
                 LevelPartTransform = Instantiate(levelFinal, EndPoint + new Vector3(10, -5), Quaternion.identity);
+                EndPoint = LevelPartTransform.Find("Endpoint").position;
+                AddFinallevel = false;
             }
-            else 
+            else if (MasterlevelCount < MaxNoOfMasterlevels)
             {
                 LevelPartTransform = Instantiate(levelMaster, EndPoint + Difference, Quaternion.identity);
-                AddFinallevel = true;
+                EndPoint = LevelPartTransform.Find("Endpoint").position;
+                MasterlevelCount++;
+                AddFinallevel = ( MasterlevelCount >= MaxNoOfMasterlevels);
             }
-
-            EndPoint = LevelPartTransform.Find("Endpoint").position;
-
-            //Debug.Log(" found the end point for the level");
         }
         catch (Exception ex)
         {

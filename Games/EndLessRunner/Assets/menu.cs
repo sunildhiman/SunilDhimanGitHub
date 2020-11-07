@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class menu : MonoBehaviour
 {
@@ -52,6 +53,7 @@ public class menu : MonoBehaviour
     }
     public void reset()
     {
-        Debug.Log("PauseGame");
+        player.score = 0;
+        SceneManager.LoadScene("Level01");
     }
 }

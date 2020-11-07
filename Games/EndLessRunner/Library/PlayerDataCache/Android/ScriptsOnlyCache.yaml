@@ -374,7 +374,7 @@ ScriptsOnlyBuild:
     className: NoiseSettings
   - hash:
       serializedVersion: 2
-      Hash: 4432a7028b35407ee7ac839030e6dd76
+      Hash: 1c8df5d5e4a168af3c5f32350167ee6a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LevelGenerator
@@ -680,7 +680,7 @@ ScriptsOnlyBuild:
     className: iOSNotificationsWrapper
   - hash:
       serializedVersion: 2
-      Hash: c68b6dd16c4847f071802db4bd48986d
+      Hash: 8550fd26c70e5564a7e7b34ed4e9061d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: player
